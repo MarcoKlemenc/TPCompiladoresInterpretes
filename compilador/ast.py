@@ -7,11 +7,20 @@ class Number():
         self.module = module
         self.value = value
 
+    def get_value(self):
+        return float(self.value)
+
     def eq(self, other):
-        return self.value == other.value
+        return self.get_value() == other.get_value()
+
+    def gt(self, other):
+        return self.get_value() > other.get_value()
+
+    def lt(self, other):
+        return self.get_value() < other.get_value()
 
     def eval(self):
-        i = ir.Constant(ir.DoubleType(), float(self.value))
+        i = ir.Constant(ir.DoubleType(), self.get_value())
         return i
 
     def get_decimal_places(self):

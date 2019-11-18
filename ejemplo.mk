@@ -36,3 +36,12 @@ IMPRIMIR booleano
 @ Pruebo un valor asignado según condición
 booleano ES "A" SI 2 IGUAL 3 NO "B"
 IMPRIMIR booleano
+
+@ Pruebo una comparación por mayor
+IMPRIMIR 105 MAYOR 57
+
+@ Pruebo una comparación por menor
+IMPRIMIR 105 MENOR 57
+
+@ Pruebo una comparación con decimales
+IMPRIMIR 108.855 MAYOR 108.6774
