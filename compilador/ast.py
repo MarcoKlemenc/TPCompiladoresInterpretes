@@ -7,6 +7,9 @@ class Number():
         self.module = module
         self.value = value
 
+    def eq(self, other):
+        return self.value == other.value
+
     def eval(self):
         i = ir.Constant(ir.DoubleType(), float(self.value))
         return i
@@ -25,6 +28,9 @@ class String():
         self.module = module
         self.value = value
 
+    def eq(self, other):
+        return self.value == other.value
+
     def eval(self):
         i = ir.Constant(ir.ArrayType(ir.IntType(8), len(self.value)), bytearray(self.value.encode("utf8")))
         return i
@@ -33,12 +39,32 @@ class String():
         return "%c" * len(self.value)
 
 
+class Boolean():
+    def __init__(self, builder, module, value):
+        self.builder = builder
+        self.module = module
+        self.value = value
+
+    def eq(self, other):
+        return self.value == other.value
+
+    def eval(self):
+        i = ir.Constant(ir.IntType(1), int(self.value))
+        return i
+
+    def format(self):
+        return "VERDADERO" if self.value else "FALSO"
+
+
 class BinaryOp():
     def __init__(self, builder, module, left, right):
         self.builder = builder
         self.module = module
         self.left = left
         self.right = right
+
+    def eq(self, other):
+        return type(self) == type(other) and self.left == other.left and self.right == other.right
 
     def get_decimal_places(self):
         return max(self.left.get_decimal_places(), self.right.get_decimal_places())

@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from .ast import Number, String, Sum, Sub, Mul, Div, Print
+from .ast import Number, String, Boolean, Sum, Sub, Mul, Div, Print
 
 
 class Parser():
@@ -42,6 +42,18 @@ class Parser():
             elif operator == 'DIV':
                 return Div(self.builder, self.module, left, right)
 
+        @self.pg.production('expr : expr EQUAL expr')
+        @self.pg.production('expr : expr GREATER expr')
+        @self.pg.production('expr : expr LESS expr')
+        def conditional(p):
+            operator = p[1].gettokentype()
+            if operator == 'EQUAL':
+                return Boolean(self.builder, self.module, p[0].eq(p[2]))
+
+        @self.pg.production('expr : expr IF expr ELSE expr')
+        def if_struct(p):
+            return p[0] if p[2].value else p[4]
+
         @self.pg.production('expr : NUMBER')
         def number(p):
             return Number(self.builder, self.module, p[0].value)
@@ -52,7 +64,7 @@ class Parser():
 
         @self.pg.production('expr : STRING')
         def string(p):
-            return String(self.builder, self.module, p[0].value[2:-2])
+            return String(self.builder, self.module, p[0].value[1:-1])
 
         @self.pg.production('expr : VAR_NAME VAR_ASSIGN expr')
         def var_assign(p):

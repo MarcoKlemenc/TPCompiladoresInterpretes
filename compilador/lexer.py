@@ -17,10 +17,17 @@ class Lexer():
         self.lexer.add('NUMBER', r'\d+')
         self.lexer.add('DECIMAL_POINT', r'\.')
         # String
-        self.lexer.add('STRING', r'\'\'.*\'\'')
+        self.lexer.add('STRING', r'\"[^"]*\"')
         # Variables
         self.lexer.add('VAR_NAME', r'[a-z_]+')
         self.lexer.add('VAR_ASSIGN', r'ES')
+        # Comparisons
+        self.lexer.add('EQUAL', r'IGUAL')
+        self.lexer.add('GREATER', r'MAYOR')
+        self.lexer.add('LESS', r'MENOR')
+        # Control structures
+        self.lexer.add('IF', r'SI')
+        self.lexer.add('ELSE', r'NO')
         # Ignore spaces
         self.lexer.ignore('\s+')
         # Ignore comments

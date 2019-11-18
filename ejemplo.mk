@@ -10,7 +10,7 @@ IMPRIMIR multiplicacion
 IMPRIMIR multiplicacion DIVIDIDO 9 @ Imprimiría 3
 
 @ Pruebo un string
-texto ES ''"Este es un texto 'ejemplo' (con simbolos pero sin acentos)."''
+texto ES "Este es un texto 'ejemplo' (con simbolos pero sin acentos)."
 IMPRIMIR texto
 
 @ Pruebo una suma con decimales
@@ -28,3 +28,11 @@ IMPRIMIR division
 @ Pruebo encadenar varias operaciones
 resultado ES 8 MAS 4.5 POR 3 MENOS 500.432
 IMPRIMIR resultado
+
+@ Pruebo un valor booleano
+booleano ES 2 IGUAL 3
+IMPRIMIR booleano
+
+@ Pruebo un valor asignado según condición
+booleano ES "A" SI 2 IGUAL 3 NO "B"
+IMPRIMIR booleano
