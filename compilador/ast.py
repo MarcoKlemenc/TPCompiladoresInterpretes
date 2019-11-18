@@ -1,14 +1,11 @@
 from llvmlite import ir
 
 
-class Number():
+class StandardObject():
     def __init__(self, builder, module, value):
         self.builder = builder
         self.module = module
         self.value = value
-
-    def get_value(self):
-        return float(self.value)
 
     def eq(self, other):
         return self.get_value() == other.get_value()
@@ -19,9 +16,16 @@ class Number():
     def lt(self, other):
         return self.get_value() < other.get_value()
 
+    def _eval(self, ir_type):
+        return ir.Constant(ir_type, self.get_value())
+
+
+class Number(StandardObject):
+    def get_value(self):
+        return float(self.value)
+
     def eval(self):
-        i = ir.Constant(ir.DoubleType(), self.get_value())
-        return i
+        return self._eval(ir.DoubleType())
 
     def get_decimal_places(self):
         number_components = self.value.split(".")
@@ -31,41 +35,23 @@ class Number():
         return "%.{}f".format(self.get_decimal_places())
 
 
-class String():
-    def __init__(self, builder, module, value):
-        self.builder = builder
-        self.module = module
-        self.value = value
-
+class String(StandardObject):
     def get_value(self):
         return bytearray(self.value.encode("utf8"))
 
-    def eq(self, other):
-        return self.get_value() == other.get_value()
-
     def eval(self):
-        i = ir.Constant(ir.ArrayType(ir.IntType(8), len(self.value)), self.get_value())
-        return i
+        return self._eval(ir.ArrayType(ir.IntType(8), len(self.value)))
 
     def format(self):
         return "%c" * len(self.value)
 
 
-class Boolean():
-    def __init__(self, builder, module, value):
-        self.builder = builder
-        self.module = module
-        self.value = value
-
+class Boolean(StandardObject):
     def get_value(self):
         return int(self.value)
 
-    def eq(self, other):
-        return self.get_value() == other.get_value()
-
     def eval(self):
-        i = ir.Constant(ir.IntType(1), self.get_value())
-        return i
+        return self._eval(ir.IntType(1))
 
     def format(self):
         return "VERDADERO" if self.value else "FALSO"
@@ -77,6 +63,9 @@ class BinaryOp():
         self.module = module
         self.left = left
         self.right = right
+
+    def _eval(self, func):
+        return getattr(self.builder, func)(self.left.eval(), self.right.eval())
 
     def eq(self, other):
         return type(self) == type(other) and self.left == other.left and self.right == other.right
@@ -90,26 +79,22 @@ class BinaryOp():
 
 class Sum(BinaryOp):
     def eval(self):
-        i = self.builder.fadd(self.left.eval(), self.right.eval())
-        return i
+        return self._eval('fadd')
 
 
 class Sub(BinaryOp):
     def eval(self):
-        i = self.builder.fsub(self.left.eval(), self.right.eval())
-        return i
+        return self._eval('fsub')
 
 
 class Mul(BinaryOp):
     def eval(self):
-        i = self.builder.fmul(self.left.eval(), self.right.eval())
-        return i
+        return self._eval('fmul')
 
 
 class Div(BinaryOp):
     def eval(self):
-        i = self.builder.fdiv(self.left.eval(), self.right.eval())
-        return i
+        return self._eval('fdiv')
 
 
 class Print():
