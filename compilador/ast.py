@@ -37,11 +37,14 @@ class String():
         self.module = module
         self.value = value
 
+    def get_value(self):
+        return bytearray(self.value.encode("utf8"))
+
     def eq(self, other):
-        return self.value == other.value
+        return self.get_value() == other.get_value()
 
     def eval(self):
-        i = ir.Constant(ir.ArrayType(ir.IntType(8), len(self.value)), bytearray(self.value.encode("utf8")))
+        i = ir.Constant(ir.ArrayType(ir.IntType(8), len(self.value)), self.get_value())
         return i
 
     def format(self):
@@ -54,11 +57,14 @@ class Boolean():
         self.module = module
         self.value = value
 
+    def get_value(self):
+        return int(self.value)
+
     def eq(self, other):
-        return self.value == other.value
+        return self.get_value() == other.get_value()
 
     def eval(self):
-        i = ir.Constant(ir.IntType(1), int(self.value))
+        i = ir.Constant(ir.IntType(1), self.get_value())
         return i
 
     def format(self):
