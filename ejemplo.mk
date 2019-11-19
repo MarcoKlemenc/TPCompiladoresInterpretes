@@ -45,3 +45,12 @@ IMPRIMIR 105 MENOR 57
 
 @ Pruebo una comparación con decimales
 IMPRIMIR 108.855 MAYOR 108.6774
+
+@ Pruebo una comparación de strings por igual
+IMPRIMIR "BUENO" IGUAL "BUENO"
+
+@ Pruebo una comparación de strings por mayor
+IMPRIMIR "BUENO" MAYOR "AVANZAR"
+
+@ Pruebo una comparación de strings por menor
+IMPRIMIR "BUENO" MENOR "AVANZAR"
