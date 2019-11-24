@@ -49,6 +49,9 @@ IMPRIMIR 108.855 MAYOR 108.6774
 @ Pruebo una comparación de strings por igual
 IMPRIMIR "BUENO" IGUAL "BUENO"
 
+@ Pruebo una comparación de strings por diferente
+IMPRIMIR "BUENO" DIFERENTE "BUENO"
+
 @ Pruebo una comparación de strings por mayor
 IMPRIMIR "BUENO" MAYOR "AVANZAR"
 

@@ -23,6 +23,7 @@ class Lexer():
         self.lexer.add('VAR_ASSIGN', r'ES')
         # Comparisons
         self.lexer.add('EQUAL', r'IGUAL')
+        self.lexer.add('DIFFERENT', r'DIFERENTE')
         self.lexer.add('GREATER', r'MAYOR')
         self.lexer.add('LESS', r'MENOR')
         # Control structures

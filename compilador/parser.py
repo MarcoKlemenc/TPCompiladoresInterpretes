@@ -43,12 +43,15 @@ class Parser():
                 return Div(self.builder, self.module, left, right)
 
         @self.pg.production('expr : expr EQUAL expr')
+        @self.pg.production('expr : expr DIFFERENT expr')
         @self.pg.production('expr : expr GREATER expr')
         @self.pg.production('expr : expr LESS expr')
         def conditional(p):
             operator = p[1].gettokentype()
             if operator == 'EQUAL':
                 return Boolean(self.builder, self.module, p[0].eq(p[2]))
+            if operator == 'DIFFERENT':
+                return Boolean(self.builder, self.module, p[0].ne(p[2]))
             if operator == 'GREATER':
                 return Boolean(self.builder, self.module, p[0].gt(p[2]))
             if operator == 'LESS':

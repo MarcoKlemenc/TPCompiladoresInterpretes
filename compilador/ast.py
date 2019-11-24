@@ -10,6 +10,9 @@ class StandardObject():
     def eq(self, other):
         return self.get_value() == other.get_value()
 
+    def ne(self, other):
+        return self.get_value() != other.get_value()
+
     def gt(self, other):
         return self.get_value() > other.get_value()
 
@@ -66,9 +69,6 @@ class BinaryOp():
 
     def _eval(self, func):
         return getattr(self.builder, func)(self.left.eval(), self.right.eval())
-
-    def eq(self, other):
-        return type(self) == type(other) and self.left == other.left and self.right == other.right
 
     def get_decimal_places(self):
         return max(self.left.get_decimal_places(), self.right.get_decimal_places())
