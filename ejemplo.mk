@@ -57,3 +57,19 @@ IMPRIMIR "BUENO" MAYOR "AVANZAR"
 
 @ Pruebo una comparación de strings por menor
 IMPRIMIR "BUENO" MENOR "AVANZAR"
+
+@ Pruebo un y entre verdadero y verdadero
+IMPRIMIR VERDADERO Y VERDADERO
+
+@ Pruebo un y entre verdadero y falso
+IMPRIMIR VERDADERO Y FALSO
+
+@ Pruebo un o entre verdadero y verdadero
+operador_uno ES "BUENO" IGUAL "BUENO"
+operador_dos ES 5 IGUAL 5
+operador_tres ES 5 IGUAL 3
+IMPRIMIR operador_uno
+IMPRIMIR operador_dos
+IMPRIMIR operador_tres
+IMPRIMIR operador_uno O operador_dos
+IMPRIMIR operador_uno O operador_tres

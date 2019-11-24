@@ -57,6 +57,24 @@ class Parser():
             if operator == 'LESS':
                 return Boolean(self.builder, self.module, p[0].lt(p[2]))
 
+        @self.pg.production('expr : TRUE')
+        @self.pg.production('expr : FALSE')
+        def boolean_variables(p):
+            operator = p[0].gettokentype()
+            if operator == 'TRUE':
+                return Boolean(self.builder, self.module, True)
+            if operator == 'FALSE':
+                return Boolean(self.builder, self.module, False)
+
+        @self.pg.production('expr : expr AND expr')
+        @self.pg.production('expr : expr OR expr')
+        def boolean_operations(p):
+            operator = p[1].gettokentype()
+            if operator == 'AND':
+                return Boolean(self.builder, self.module, p[0].value and p[2].value)
+            if operator == 'OR':
+                return Boolean(self.builder, self.module, p[0].value or p[2].value)
+
         @self.pg.production('expr : expr IF expr ELSE expr')
         def if_struct(p):
             return p[0] if p[2].value else p[4]

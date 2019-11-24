@@ -26,6 +26,12 @@ class Lexer():
         self.lexer.add('DIFFERENT', r'DIFERENTE')
         self.lexer.add('GREATER', r'MAYOR')
         self.lexer.add('LESS', r'MENOR')
+        # Boolean variables
+        self.lexer.add('TRUE', r'VERDADERO')
+        self.lexer.add('FALSE', r'FALSO')
+        # Boolean operators
+        self.lexer.add('AND', r'Y')
+        self.lexer.add('OR', r'O')
         # Control structures
         self.lexer.add('IF', r'SI')
         self.lexer.add('ELSE', r'NO')
