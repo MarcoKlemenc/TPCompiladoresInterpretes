@@ -64,6 +64,7 @@ class Parser():
         @self.pg.production('expr : expr OR expr')
         def boolean_operations(p):
             operator = p[1].gettokentype()
+            p[0]
             if operator == 'AND':
                 return Boolean(self.builder, self.module, p[0].value and p[2].value)
             if operator == 'OR':

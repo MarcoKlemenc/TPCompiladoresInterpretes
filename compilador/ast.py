@@ -8,15 +8,19 @@ class StandardObject():
         self.value = value
 
     def eq(self, other):
-        return self.get_value() == other.get_value()
+        return type(self) == type(other) and self.get_value() == other.get_value()
 
     def ne(self, other):
-        return self.get_value() != other.get_value()
+        return not self.eq(other)
 
     def gt(self, other):
+        if type(self) != type(other):
+            raise Exception("Está tratando de comparar dos tipos de dato distintos")
         return self.get_value() > other.get_value()
 
     def lt(self, other):
+        if type(self) != type(other):
+            raise Exception("Está tratando de comparar dos tipos de dato distintos")
         return self.get_value() < other.get_value()
 
     def _eval(self, ir_type):

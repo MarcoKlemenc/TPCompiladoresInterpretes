@@ -80,3 +80,6 @@ IMPRIMIR "AA" MAS "BB" MAS variable MAS "CC"
 
 @ Pruebo una operación inválida
 @ IMPRIMIR 3 MAS "AA"
+
+@ Pruebo una comparación inválida
+@ IMPRIMIR "ASD" MAYOR 3
