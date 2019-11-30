@@ -89,6 +89,7 @@ class OpBuilder():
             return Sum(self.builder, self.module, left, right)
         if self.operand_is_string(left) and self.operand_is_string(right):
             return StringSum(self.builder, self.module, left, right)
+        raise Exception("Suma inválida")
 
     def sub(self, left, right):
         return Sub(self.builder, self.module, left, right)
