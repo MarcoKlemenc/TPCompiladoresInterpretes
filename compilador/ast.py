@@ -40,13 +40,16 @@ class Number(StandardObject):
 
 class String(StandardObject):
     def get_value(self):
-        return bytearray(self.value.encode("utf8"))
+        return self.value
+
+    def get_string_length(self):
+        return len(self.value)
 
     def eval(self):
-        return self._eval(ir.ArrayType(ir.IntType(8), len(self.value)))
+        return ir.Constant(ir.ArrayType(ir.IntType(8), len(self.value)), bytearray(self.value.encode("utf8")))
 
     def format(self):
-        return "%c" * len(self.value)
+        return "%c" * self.get_string_length()
 
 
 class Boolean(StandardObject):
@@ -60,6 +63,43 @@ class Boolean(StandardObject):
         return "VERDADERO" if self.value else "FALSO"
 
 
+class OpBuilder():
+    def __init__(self, builder, module):
+        self.builder = builder
+        self.module = module
+
+    def operand_is_number(self, operand):
+        return isinstance(operand, Number) or issubclass(type(operand), NumberOp)
+
+    def operand_is_string(self, operand):
+        return isinstance(operand, String) or issubclass(type(operand), StringOp)
+
+    def build_op(self, left, right, operator):
+        if operator == "SUM":
+            return self.sum(left, right)
+        if operator == "SUB":
+            return self.sub(left, right)
+        if operator == "MUL":
+            return self.mul(left, right)
+        if operator == "DIV":
+            return self.div(left, right)
+
+    def sum(self, left, right):
+        if self.operand_is_number(left) and self.operand_is_number(right):
+            return Sum(self.builder, self.module, left, right)
+        if self.operand_is_string(left) and self.operand_is_string(right):
+            return StringSum(self.builder, self.module, left, right)
+
+    def sub(self, left, right):
+        return Sub(self.builder, self.module, left, right)
+
+    def mul(self, left, right):
+        return Mul(self.builder, self.module, left, right)
+
+    def div(self, left, right):
+        return Div(self.builder, self.module, left, right)
+
+
 class BinaryOp():
     def __init__(self, builder, module, left, right):
         self.builder = builder
@@ -67,6 +107,24 @@ class BinaryOp():
         self.left = left
         self.right = right
 
+
+class StringOp(BinaryOp):
+    def format(self):
+        return "%c" * self.get_string_length()
+
+
+class StringSum(StringOp):
+    def get_value(self):
+        return self.left.get_value() + self.right.get_value()
+
+    def get_string_length(self):
+        return self.left.get_string_length() + self.right.get_string_length()
+
+    def eval(self):
+        return String(self.builder, self.module, self.get_value()).eval()
+
+
+class NumberOp(BinaryOp):
     def _eval(self, func):
         return getattr(self.builder, func)(self.left.eval(), self.right.eval())
 
@@ -77,22 +135,22 @@ class BinaryOp():
         return "%.{}f".format(self.get_decimal_places())
 
 
-class Sum(BinaryOp):
+class Sum(NumberOp):
     def eval(self):
         return self._eval('fadd')
 
 
-class Sub(BinaryOp):
+class Sub(NumberOp):
     def eval(self):
         return self._eval('fsub')
 
 
-class Mul(BinaryOp):
+class Mul(NumberOp):
     def eval(self):
         return self._eval('fmul')
 
 
-class Div(BinaryOp):
+class Div(NumberOp):
     def eval(self):
         return self._eval('fdiv')
 

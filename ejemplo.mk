@@ -73,3 +73,7 @@ IMPRIMIR operador_dos
 IMPRIMIR operador_tres
 IMPRIMIR operador_uno O operador_dos
 IMPRIMIR operador_uno O operador_tres
+
+@ Pruebo concatenar strings
+variable ES " -- "
+IMPRIMIR "AA" MAS "BB" MAS variable MAS "CC"

@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from .ast import Number, String, Boolean, Sum, Sub, Mul, Div, Print
+from .ast import Number, String, Boolean, OpBuilder, Print
 
 
 class Parser():
@@ -33,14 +33,8 @@ class Parser():
             left = p[0]
             right = p[2]
             operator = p[1].gettokentype()
-            if operator == 'SUM':
-                return Sum(self.builder, self.module, left, right)
-            elif operator == 'SUB':
-                return Sub(self.builder, self.module, left, right)
-            elif operator == 'MUL':
-                return Mul(self.builder, self.module, left, right)
-            elif operator == 'DIV':
-                return Div(self.builder, self.module, left, right)
+            op_builder = OpBuilder(self.builder, self.module)
+            return op_builder.build_op(left, right, operator)
 
         @self.pg.production('expr : expr EQUAL expr')
         @self.pg.production('expr : expr DIFFERENT expr')
