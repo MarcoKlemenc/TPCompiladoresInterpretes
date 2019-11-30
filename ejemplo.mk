@@ -78,8 +78,17 @@ IMPRIMIR operador_uno O operador_tres
 variable ES " -- "
 IMPRIMIR "AA" MAS "BB" MAS variable MAS "CC"
 
-@ Pruebo una operación inválida
+@ Pruebo una suma inválida
 @ IMPRIMIR 3 MAS "AA"
+
+@ Pruebo una resta inválida
+@ IMPRIMIR 3 MENOS "AA"
+
+@ Pruebo una multiplicación inválida
+@ IMPRIMIR 3 POR "AA"
+
+@ Pruebo una división inválida
+@ IMPRIMIR 3 DIVIDIDO "AA"
 
 @ Pruebo una comparación inválida
 @ IMPRIMIR "ASD" MAYOR 3

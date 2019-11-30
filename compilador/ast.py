@@ -96,13 +96,19 @@ class OpBuilder():
         raise Exception("Suma inválida")
 
     def sub(self, left, right):
-        return Sub(self.builder, self.module, left, right)
+        if self.operand_is_number(left) and self.operand_is_number(right):
+            return Sub(self.builder, self.module, left, right)
+        raise Exception("Resta inválida")
 
     def mul(self, left, right):
-        return Mul(self.builder, self.module, left, right)
+        if self.operand_is_number(left) and self.operand_is_number(right):
+            return Mul(self.builder, self.module, left, right)
+        raise Exception("Multiplicación inválida")
 
     def div(self, left, right):
-        return Div(self.builder, self.module, left, right)
+        if self.operand_is_number(left) and self.operand_is_number(right):
+            return Div(self.builder, self.module, left, right)
+        raise Exception("División inválida")
 
 
 class BinaryOp():
