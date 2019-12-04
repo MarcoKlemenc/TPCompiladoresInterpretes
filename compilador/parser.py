@@ -4,7 +4,7 @@ from .ast import Number, String, Boolean, OpBuilder, Print
 
 class Parser():
     def __init__(self, module, builder, printf, tokens):
-        self.pg = ParserGenerator(tokens, precedence=[('left', ['SUM', 'SUB']), ('left', ['MUL', 'DIV'])])
+        self.pg = ParserGenerator(tokens, precedence=[('left', ['SUM', 'SUB']), ('left', ['MUL', 'DIV']), ('left', ['OPEN_PARENTHESIS', 'CLOSE_PARENTHESIS'])])
         self.module = module
         self.builder = builder
         self.printf = printf
@@ -50,6 +50,10 @@ class Parser():
                 return Boolean(self.builder, self.module, p[0].gt(p[2]))
             if operator == 'LESS':
                 return Boolean(self.builder, self.module, p[0].lt(p[2]))
+
+        @self.pg.production('expr : OPEN_PARENTHESIS expr CLOSE_PARENTHESIS')
+        def parenthesis(p):
+            return p[1]
 
         @self.pg.production('expr : TRUE')
         @self.pg.production('expr : FALSE')

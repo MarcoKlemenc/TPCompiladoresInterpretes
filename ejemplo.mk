@@ -29,6 +29,10 @@ IMPRIMIR division
 resultado ES 8 MAS 4.5 POR 3 MENOS 500.432
 IMPRIMIR resultado
 
+@ Pruebo una operación con paréntesis
+resultado ES 5 POR (4 MAS 8) DIVIDIDO 2.0
+IMPRIMIR resultado
+
 @ Pruebo un valor booleano
 booleano ES 2 IGUAL 3
 IMPRIMIR booleano

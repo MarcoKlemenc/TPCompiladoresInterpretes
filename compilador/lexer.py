@@ -9,6 +9,8 @@ class Lexer():
         # Print
         self.lexer.add('PRINT', r'IMPRIMIR')
         # Operators
+        self.lexer.add('OPEN_PARENTHESIS', r'\(')
+        self.lexer.add('CLOSE_PARENTHESIS', r'\)')
         self.lexer.add('MUL', r'POR')
         self.lexer.add('DIV', r'DIVIDIDO')
         self.lexer.add('SUM', r'MAS')
