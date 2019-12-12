@@ -1,8 +1,9 @@
 from compilador.codegen import CodeGen
 from compilador.lexer import Lexer
 from compilador.parser import Parser
+import sys
 
-fname = "ejemplo.mk"
+fname = sys.argv[1]
 with open(fname) as f:
     text_input = f.read()
 
